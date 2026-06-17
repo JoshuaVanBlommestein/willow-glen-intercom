@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Willow Glen Complex — Visitor Intercom</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+:root{--black:#0a0a0a;--off-black:#111111;--dark:#1a1a1a;--mid:#2a2a2a;--border:#2e2e2e;--muted:#555555;--subtle:#888888;--light:#cccccc;--white:#ffffff;--radius:12px;}
+body{font-family:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;background:var(--black);color:var(--white);min-height:100vh;display:flex;flex-direction:column;align-items:center;-webkit-font-smoothing:antialiased;}
+header{width:100%;background:var(--off-black);border-bottom:1px solid var(--border);padding:32px 24px 28px;text-align:center;}
+.complex-name{font-size:clamp(1.4rem,5vw,1.9rem);font-weight:800;letter-spacing:-0.5px;color:var(--white);line-height:1.2;}
+.complex-address{margin-top:8px;font-size:0.82rem;font-weight:400;color:var(--subtle);letter-spacing:0.3px;line-height:1.5;}
+.intercom-label{display:inline-block;margin-top:14px;padding:5px 14px;border:1px solid var(--border);border-radius:999px;font-size:0.72rem;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;color:var(--subtle);}
+.search-wrapper{width:100%;max-width:520px;padding:24px 20px 12px;}
+.search-inner{position:relative;display:flex;align-items:center;}
+.search-icon{position:absolute;left:16px;width:18px;height:18px;color:var(--muted);pointer-events:none;flex-shrink:0;}
+#searchInput{width:100%;padding:15px 16px 15px 46px;font-family:inherit;font-size:1rem;font-weight:400;background:var(--dark);color:var(--white);border:1px solid var(--border);border-radius:var(--radius);outline:none;transition:border-color 0.15s;}
+#searchInput::placeholder{color:var(--muted);}
+#searchInput:focus{border-color:var(--subtle);}
+.directory{width:100%;max-width:520px;padding:8px 20px 60px;display:flex;flex-direction:column;gap:10px;}
+.section-label{font-size:0.7rem;font-weight:600;letter-spacing:1.2px;text-transform:uppercase;color:var(--muted);padding:8px 0 4px;}
+.unit-card{background:var(--off-black);border:1px solid var(--border);border-radius:var(--radius);display:flex;align-items:center;justify-content:space-between;padding:18px 20px;gap:16px;transition:border-color 0.15s,background 0.15s;}
+.unit-card.has-number:hover{background:var(--dark);border-color:var(--muted);}
+.unit-card.has-number{border-left:3px solid var(--white);}
+.unit-card.no-number{border-left:3px solid var(--mid);opacity:0.6;}
+.unit-info{flex:1;}
+.unit-name{font-size:1.05rem;font-weight:600;color:var(--white);letter-spacing:-0.2px;}
+.unit-card.no-number .unit-name{color:var(--light);}
+.unit-sub{margin-top:3px;font-size:0.78rem;font-weight:400;color:var(--muted);}
+.btn-call{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:13px 22px;min-width:110px;min-height:50px;background:var(--white);color:var(--black);font-family:inherit;font-size:0.9rem;font-weight:700;letter-spacing:0.2px;border:none;border-radius:8px;text-decoration:none;cursor:pointer;white-space:nowrap;transition:background 0.15s,transform 0.1s;flex-shrink:0;}
+.btn-call:active{background:var(--light);transform:scale(0.97);}
+.btn-call svg{width:15px;height:15px;}
+.btn-disabled{display:inline-flex;align-items:center;justify-content:center;padding:13px 22px;min-width:110px;min-height:50px;background:transparent;color:var(--muted);font-family:inherit;font-size:0.82rem;font-weight:500;border:1px dashed var(--border);border-radius:8px;cursor:not-allowed;white-space:nowrap;flex-shrink:0;letter-spacing:0.2px;}
+.no-results{text-align:center;color:var(--muted);font-size:0.9rem;padding:48px 0;display:none;}
+footer{margin-top:auto;padding:28px 20px;text-align:center;color:var(--border);font-size:0.72rem;letter-spacing:0.3px;border-top:1px solid var(--border);width:100%;}
+</style>
+</head>
+<body>
+<header>
+  <div class="complex-name">Willow Glen Complex</div>
+  <div class="complex-address">274 Willson St, Fairland, Johannesburg, 2030</div>
+  <span class="intercom-label">Visitor Intercom</span>
+</header>
+<div class="search-wrapper">
+  <div class="search-inner">
+    <svg class="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+    <input type="search" id="searchInput" placeholder="Search unit..." autocomplete="off" autocorrect="off" spellcheck="false" inputmode="search"/>
+  </div>
+</div>
+<div class="directory" id="directory">
+<div class="section-label">Units</div>
+<!-- ================================================================
+HOW TO ADD OR EDIT UNITS
+==================================================================
+UNIT WITH PHONE NUMBER:
+<div class="unit-card has-number" data-unit="Unit X">
+  <div class="unit-info"><div class="unit-name">Unit X</div><div class="unit-sub">Tap to call</div></div>
+  <a class="btn-call" href="tel:+27XXXXXXXXX">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6A19.79 19.79 0 012.12 4.18 2 2 0 014.11 2h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg>
+    Call
+  </a>
+</div>
+UNIT WITHOUT PHONE NUMBER:
+<div class="unit-card no-number" data-unit="Unit X">
+  <div class="unit-info"><div class="unit-name">Unit X</div><div class="unit-sub">Not configured</div></div>
+  <span class="btn-disabled">No No.</span>
+</div>
+TO ADD A NUMBER: change no-number to has-number, swap btn-disabled for btn-call anchor
+================================================================ -->
+  <div class="unit-card no-number" data-unit="Unit 1"><div class="unit-info"><div class="unit-name">Unit 1</div><div class="unit-sub">Not configured</div></div><span class="btn-disabled">No No.</span></div>
+  <div class="unit-card no-number" data-unit="Unit 2"><div class="unit-info"><div class="unit-name">Unit 2</div><div class="unit-sub">Not configured</div></div><span class="btn-disabled">No No.</span></div>
+  <div class="unit-card no-number" data-unit="Unit 3"><div class="unit-info"><div class="unit-name">Unit 3</div><div class="unit-sub">Not configured</div></div><span class="btn-disabled">No No.</span></div>
+  <div class="unit-card no-number" data-unit="Unit 4"><div class="unit-info"><div class="unit-name">Unit 4</div><div class="unit-sub">Not configured</div></div><span class="btn-disabled">No No.</span></div>
+  <div class="unit-card no-number" data-unit="Unit 5"><div class="unit-info"><div class="unit-name">Unit 5</div><div class="unit-sub">Not configured</div></div><span class="btn-disabled">No No.</span></div>
+  <div class="unit-card has-number" data-unit="Unit 6"><div class="unit-info"><div class="unit-name">Unit 6</div><div class="unit-sub">Tap to call</div></div><a class="btn-call" href="tel:+27840160181"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6A19.79 19.79 0 012.12 4.18 2 2 0 014.11 2h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg>Call</a></div>
+  <div class="unit-card no-number" data-unit="Unit 7"><div class="unit-info"><div class="unit-name">Unit 7</div><div class="unit-sub">Not configured</div></div><span class="btn-disabled">No No.</span></div>
+</div>
+<p class="no-results" id="noResults">No units match your search.</p>
+<footer>Willow Glen Complex &mdash; 274 Willson St, Fairland, Johannesburg</footer>
+<script>
+const input=document.getElementById('searchInput');
+const cards=document.querySelectorAll('.unit-card');
+const noResults=document.getElementById('noResults');
+input.addEventListener('input',function(){
+  const q=this.value.trim().toLowerCase();let v=0;
+  cards.forEach(function(c){const m=c.getAttribute('data-unit').toLowerCase().includes(q);c.style.display=m?'flex':'none';if(m)v++;});
+  noResults.style.display=v===0?'block':'none';
+});
+</script>
+</body>
+</html>
