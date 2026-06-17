@@ -1,110 +1,71 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8"/>
-<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>Willow Glen Complex – Visitor Intercom</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Willow Glen Complex - Gate Intercom</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap');
-*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
-html,body{height:100%;}
-body{font-family:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;background:#0a0a0a;color:#fff;min-height:100vh;display:flex;flex-direction:column;align-items:center;}
-header{text-align:center;padding:44px 24px 28px;width:100%;}
-.name{font-size:clamp(1.7rem,6vw,2.4rem);font-weight:900;letter-spacing:-1.5px;color:#fff;}
-.addr{margin-top:6px;font-size:0.78rem;color:#aaa;letter-spacing:0.1px;}
-.tag{display:inline-block;margin-top:16px;padding:4px 12px;border:1px solid #555;border-radius:999px;font-size:0.65rem;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:#aaa;}
-.grid{width:100%;max-width:600px;display:grid;grid-template-columns:repeat(3,1fr);gap:10px;padding:0 16px 52px;}
-.card{background:#111;border:2px solid #fff;border-radius:18px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;padding:28px 10px;aspect-ratio:1/1;}
-.card.on{border-color:#fff;}
-.card.on:active{background:#161616;}
-.card.off{opacity:0.35;}
-.lbl{font-size:0.6rem;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:#fff;}
-.num{font-size:2.2rem;font-weight:900;letter-spacing:-2px;line-height:1;color:#fff;}
-.btn{display:inline-flex;align-items:center;justify-content:center;gap:6px;padding:9px 0;width:80%;max-width:100%;background:#fff;color:#000;font-family:inherit;font-size:0.78rem;font-weight:700;letter-spacing:0.5px;text-decoration:none;border-radius:999px;border:none;cursor:pointer;}
-.btn:active{background:#ccc;transform:scale(0.95);}
-.btn svg{width:12px;height:12px;}
-.dash{font-size:1.2rem;color:#fff;line-height:1;}
-footer{padding:0 20px 36px;text-align:center;color:#555;font-size:0.68rem;}
-@media(max-width:340px){.grid{grid-template-columns:repeat(2,1fr);}}
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Inter', sans-serif; background: #fff; color: #000; min-height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 24px 16px; }
+  .header { text-align: center; margin-bottom: 32px; }
+  .header h1 { font-size: 1.5rem; font-weight: 700; letter-spacing: -0.02em; line-height: 1.2; }
+  .header p { font-size: 0.85rem; color: #555; margin-top: 6px; }
+  .card { width: 100%; max-width: 400px; border: 2px solid #000; border-radius: 12px; overflow: hidden; }
+  .selector { display: flex; align-items: center; padding: 0 16px; border-bottom: 2px solid #000; background: #fff; }
+  .selector label { font-size: 0.8rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; color: #555; white-space: nowrap; margin-right: 12px; }
+  .selector select { flex: 1; border: none; outline: none; background: transparent; font-family: 'Inter', sans-serif; font-size: 1.1rem; font-weight: 600; color: #000; padding: 18px 0; cursor: pointer; appearance: none; -webkit-appearance: none; }
+  .selector .arrow { font-size: 1rem; color: #000; pointer-events: none; margin-left: 8px; }
+  .result { padding: 24px 16px; min-height: 110px; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; gap: 16px; }
+  .result-name { font-size: 1.3rem; font-weight: 700; }
+  .call-btn { display: flex; align-items: center; gap: 10px; background: #000; color: #fff; text-decoration: none; font-size: 1.1rem; font-weight: 600; padding: 16px 40px; border-radius: 8px; width: 100%; justify-content: center; transition: opacity 0.15s; }
+  .call-btn:active { opacity: 0.75; }
+  .call-btn svg { width: 20px; height: 20px; fill: #fff; flex-shrink: 0; }
+  .no-number { font-size: 0.95rem; color: #888; }
+  .placeholder { font-size: 0.95rem; color: #aaa; }
+  .divider { width: 40px; height: 2px; background: #e0e0e0; border-radius: 2px; }
+  .footer { margin-top: 28px; font-size: 0.75rem; color: #aaa; text-align: center; }
 </style>
 </head>
 <body>
-<header>
-  <div class="name">Willow Glen Complex</div>
-  <div class="addr">274 Willson St, Fairland, Johannesburg, 2030</div>
-  <span class="tag">Visitor Intercom</span>
-</header>
-
-<div class="grid">
-
-  <!-- ====================================================
-       HOW TO ADD A PHONE NUMBER TO A UNIT:
-       1. Find the unit below (e.g. Unit 1)
-       2. Change  class="card off"  to  class="card on"
-       3. Delete the <span class="dash">—</span> line
-       4. Add:  <a class="btn" href="tel:+27XXXXXXXXX">
-                  <svg viewBox="0 0 24 24" fill="currentColor"><path d="M6.6 10.8c1.4 2.8 3.8 5.1 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.1.4 2.3.6 3.6.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1-9.4 0-17-7.6-17-17 0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.3.2 2.5.6 3.6.1.3 0 .7-.2 1L6.6 10.8z"/></svg>
-                  Call
-                </a>
-          Replace +27XXXXXXXXX with the number (no spaces).
-          Example: 084 016 0181 becomes +27840160181
-       5. Click "Commit changes" — live in ~60 seconds.
-       ==================================================== -->
-
-  <!-- Unit 1 — no number yet -->
-  <div class="card off">
-    <span class="lbl">Unit</span>
-    <span class="num">1</span>
-    <span class="dash">—</span>
-  </div>
-
-  <!-- Unit 2 — no number yet -->
-  <div class="card off">
-    <span class="lbl">Unit</span>
-    <span class="num">2</span>
-    <span class="dash">—</span>
-  </div>
-
-  <!-- Unit 3 — no number yet -->
-  <div class="card off">
-    <span class="lbl">Unit</span>
-    <span class="num">3</span>
-    <span class="dash">—</span>
-  </div>
-
-  <!-- Unit 4 — no number yet -->
-  <div class="card off">
-    <span class="lbl">Unit</span>
-    <span class="num">4</span>
-    <span class="dash">—</span>
-  </div>
-
-  <!-- Unit 5 — no number yet -->
-  <div class="card off">
-    <span class="lbl">Unit</span>
-    <span class="num">5</span>
-    <span class="dash">—</span>
-  </div>
-
-  <!-- Unit 6 — 084 016 0181 -->
-  <div class="card on">
-    <span class="lbl">Unit</span>
-    <span class="num">6</span>
-    <a class="btn" href="tel:+27840160181">
-      <svg viewBox="0 0 24 24" fill="currentColor"><path d="M6.6 10.8c1.4 2.8 3.8 5.1 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.1.4 2.3.6 3.6.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1-9.4 0-17-7.6-17-17 0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.3.2 2.5.6 3.6.1.3 0 .7-.2 1L6.6 10.8z"/></svg>
-      Call
-    </a>
-  </div>
-
-  <!-- Unit 7 — no number yet -->
-  <div class="card off">
-    <span class="lbl">Unit</span>
-    <span class="num">7</span>
-    <span class="dash">—</span>
-  </div>
-
+<div class="header">
+  <h1>Willow Glen Complex</h1>
+  <p>274 Willson St, Fairland, Johannesburg, 2030</p>
 </div>
-
-<footer>Tap a unit to call the resident &bull; Willow Glen Complex</footer>
+<div class="card">
+  <div class="selector">
+    <label>Unit</label>
+    <select id="unitSelect" onchange="showUnit()">
+      <option value="">Select a unit...</option>
+      <option value="">Unit 1</option>
+      <option value="">Unit 2</option>
+      <option value="">Unit 3</option>
+      <option value="">Unit 4</option>
+      <option value="">Unit 5</option>
+      <option value="+27840160181">Unit 6</option>
+    </select>
+    <span class="arrow">&#9660;</span>
+  </div>
+  <div class="result" id="result">
+    <span class="placeholder">Select a unit above to call the resident.</span>
+  </div>
+</div>
+<div class="footer">Tap a unit, then press Call to connect.</div>
+<script>
+function showUnit() {
+  var sel = document.getElementById('unitSelect');
+  var res = document.getElementById('result');
+  var idx = sel.selectedIndex;
+  var opt = sel.options[idx];
+  var label = opt.text;
+  var phone = opt.value;
+  if (idx === 0) { res.innerHTML = '<span class="placeholder">Select a unit above to call the resident.</span>'; return; }
+  if (phone) {
+    res.innerHTML = '<span class="result-name">' + label + '</span><a class="call-btn" href="tel:' + phone + '"><svg viewBox="0 0 24 24"><path d="M6.6 10.8c1.4 2.8 3.8 5.1 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.1.4 2.3.6 3.6.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1-9.4 0-17-7.6-17-17 0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.3.2 2.5.6 3.6.1.3 0 .7-.2 1L6.6 10.8z"/></svg>Call ' + label + '</a>';
+  } else {
+    res.innerHTML = '<span class="result-name">' + label + '</span><div class="divider"></div><span class="no-number">This unit is not yet registered.</span>';
+  }
+}
+</script>
 </body>
 </html>
