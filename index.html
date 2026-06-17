@@ -3,83 +3,108 @@
 <head>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>Willow Glen Complex — Visitor Intercom</title>
+<title>Willow Glen Complex – Visitor Intercom</title>
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap');
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
 html,body{height:100%;}
-body{font-family:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;background:#0a0a0a;color:#fff;min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;-webkit-font-smoothing:antialiased;}
+body{font-family:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;background:#0a0a0a;color:#fff;min-height:100vh;display:flex;flex-direction:column;align-items:center;}
 header{text-align:center;padding:44px 24px 28px;width:100%;}
 .name{font-size:clamp(1.7rem,6vw,2.4rem);font-weight:900;letter-spacing:-1.5px;color:#fff;}
-.addr{margin-top:6px;font-size:0.78rem;color:#444;letter-spacing:0.1px;}
-.tag{display:inline-block;margin-top:16px;padding:4px 12px;border:1px solid #1e1e1e;border-radius:999px;font-size:0.65rem;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:#333;}
+.addr{margin-top:6px;font-size:0.78rem;color:#aaa;letter-spacing:0.1px;}
+.tag{display:inline-block;margin-top:16px;padding:4px 12px;border:1px solid #555;border-radius:999px;font-size:0.65rem;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:#aaa;}
 .grid{width:100%;max-width:600px;display:grid;grid-template-columns:repeat(3,1fr);gap:10px;padding:0 16px 52px;}
-.card{background:#111;border:1px solid #1a1a1a;border-radius:18px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;padding:28px 10px 24px;text-align:center;aspect-ratio:1/1;transition:background 0.15s,border-color 0.15s;}
-.card.on{border-color:#222;}
+.card{background:#111;border:2px solid #fff;border-radius:18px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;padding:28px 10px;aspect-ratio:1/1;}
+.card.on{border-color:#fff;}
 .card.on:active{background:#161616;}
-.card.off{opacity:0.3;}
-.lbl{font-size:0.6rem;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:#333;}
+.card.off{opacity:0.35;}
+.lbl{font-size:0.6rem;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:#fff;}
 .num{font-size:2.2rem;font-weight:900;letter-spacing:-2px;line-height:1;color:#fff;}
-.card.off .num{color:#222;}
-.btn{display:inline-flex;align-items:center;justify-content:center;gap:6px;padding:9px 0;width:80%;max-width:100px;background:#fff;color:#000;font-family:inherit;font-size:0.78rem;font-weight:700;border:none;border-radius:8px;text-decoration:none;transition:background 0.15s,transform 0.1s;}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:6px;padding:9px 0;width:80%;max-width:100%;background:#fff;color:#000;font-family:inherit;font-size:0.78rem;font-weight:700;letter-spacing:0.5px;text-decoration:none;border-radius:999px;border:none;cursor:pointer;}
 .btn:active{background:#ccc;transform:scale(0.95);}
 .btn svg{width:12px;height:12px;}
-.dash{font-size:1.2rem;color:#1e1e1e;line-height:1;}
-footer{padding:0 20px 36px;text-align:center;color:#1c1c1c;font-size:0.68rem;}
+.dash{font-size:1.2rem;color:#fff;line-height:1;}
+footer{padding:0 20px 36px;text-align:center;color:#555;font-size:0.68rem;}
 @media(max-width:340px){.grid{grid-template-columns:repeat(2,1fr);}}
 </style>
 </head>
 <body>
 <header>
   <div class="name">Willow Glen Complex</div>
-  <div class="addr">274 Willson St &nbsp;&middot;&nbsp; Fairland, Johannesburg 2030</div>
+  <div class="addr">274 Willson St, Fairland, Johannesburg, 2030</div>
   <span class="tag">Visitor Intercom</span>
 </header>
+
 <div class="grid">
-<!-- ================================================================
-HOW TO ADD A NUMBER TO A UNIT
-1. Change class="card off" to class="card on"
-2. Replace <span class="dash">&#8212;</span>  with:
-   <a class="btn" href="tel:+27XXXXXXXXX">
-     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6A19.79 19.79 0 012.12 4.18 2 2 0 014.11 2h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg>
-     Call
-   </a>
-Phone number: +27 then digits, no spaces. Example: +27840160181
-================================================================ -->
+
+  <!-- ====================================================
+       HOW TO ADD A PHONE NUMBER TO A UNIT:
+       1. Find the unit below (e.g. Unit 1)
+       2. Change  class="card off"  to  class="card on"
+       3. Delete the <span class="dash">—</span> line
+       4. Add:  <a class="btn" href="tel:+27XXXXXXXXX">
+                  <svg viewBox="0 0 24 24" fill="currentColor"><path d="M6.6 10.8c1.4 2.8 3.8 5.1 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.1.4 2.3.6 3.6.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1-9.4 0-17-7.6-17-17 0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.3.2 2.5.6 3.6.1.3 0 .7-.2 1L6.6 10.8z"/></svg>
+                  Call
+                </a>
+          Replace +27XXXXXXXXX with the number (no spaces).
+          Example: 084 016 0181 becomes +27840160181
+       5. Click "Commit changes" — live in ~60 seconds.
+       ==================================================== -->
+
+  <!-- Unit 1 — no number yet -->
   <div class="card off">
     <span class="lbl">Unit</span>
     <span class="num">1</span>
-    <span class="dash">&#8212;</span>
+    <span class="dash">—</span>
   </div>
+
+  <!-- Unit 2 — no number yet -->
   <div class="card off">
     <span class="lbl">Unit</span>
     <span class="num">2</span>
-    <span class="dash">&#8212;</span>
+    <span class="dash">—</span>
   </div>
+
+  <!-- Unit 3 — no number yet -->
   <div class="card off">
     <span class="lbl">Unit</span>
     <span class="num">3</span>
-    <span class="dash">&#8212;</span>
+    <span class="dash">—</span>
   </div>
+
+  <!-- Unit 4 — no number yet -->
   <div class="card off">
     <span class="lbl">Unit</span>
     <span class="num">4</span>
-    <span class="dash">&#8212;</span>
+    <span class="dash">—</span>
   </div>
+
+  <!-- Unit 5 — no number yet -->
   <div class="card off">
     <span class="lbl">Unit</span>
     <span class="num">5</span>
-    <span class="dash">&#8212;</span>
+    <span class="dash">—</span>
   </div>
+
+  <!-- Unit 6 — 084 016 0181 -->
   <div class="card on">
     <span class="lbl">Unit</span>
     <span class="num">6</span>
     <a class="btn" href="tel:+27840160181">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6A19.79 19.79 0 012.12 4.18 2 2 0 014.11 2h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg>
+      <svg viewBox="0 0 24 24" fill="currentColor"><path d="M6.6 10.8c1.4 2.8 3.8 5.1 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.1.4 2.3.6 3.6.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1-9.4 0-17-7.6-17-17 0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.3.2 2.5.6 3.6.1.3 0 .7-.2 1L6.6 10.8z"/></svg>
       Call
     </a>
   </div>
+
+  <!-- Unit 7 — no number yet -->
+  <div class="card off">
+    <span class="lbl">Unit</span>
+    <span class="num">7</span>
+    <span class="dash">—</span>
+  </div>
+
 </div>
-<footer>Willow Glen Complex &mdash; 274 Willson St, Fairland, Johannesburg</footer>
+
+<footer>Tap a unit to call the resident &bull; Willow Glen Complex</footer>
 </body>
 </html>
